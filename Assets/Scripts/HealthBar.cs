@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private float _speedHealthChange;
 
+    private Coroutine _currentCoroutine;
 
     private void Start()
     {
@@ -38,7 +39,12 @@ public class HealthBar : MonoBehaviour
 
     private void OnHealthChange(float value)
     {
-        StartCoroutine(ChangingHealthSlider(value));
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+
+        _currentCoroutine = StartCoroutine(ChangingHealthSlider(value));
     }
 }
 
